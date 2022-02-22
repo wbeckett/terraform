@@ -84,10 +84,18 @@ resource "aws_security_group" "default" {
   vpc_id      = aws_vpc.default.id
 
   ingress {
+    from_port   = "0"
+    to_port     = "0"
+    protocol    = "-1"
+    cidr_blocks = ["10.0.0.0/16"]
+    description = "Allow internal traffic"
+  }
+
+  ingress {
     from_port   = "22"
     to_port     = "22"
     protocol    = "tcp"
-    cidr_blocks = ["88.99.82.251/32"]
+    cidr_blocks = ["88.99.82.251/32","0.0.0.0/0"]
     description = "Allow is SSH only from admin host"
   }
 
@@ -111,11 +119,47 @@ resource "aws_security_group" "default" {
     from_port   = "0"
     to_port     = "0"
     protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
     description = "Allow out all traffic"
-    self        = "true"
   }
 
   tags = {
     Environment = "${local.workspace_title} SG"
   }
 }
+
+# AL Security Group of VPC
+resource "aws_security_group" "alb" {
+  name        = "${local.workspace_title}-alb-sg"
+  description = "Allow in all HTTP/HTTPS traffic to a ALB"
+  vpc_id      = aws_vpc.default.id
+
+  ingress {
+    from_port   = "80"
+    to_port     = "80"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTP to the ALB"
+  }
+
+  ingress {
+    from_port   = "443"
+    to_port     = "443"
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow HTTPS to the ALB"
+  }
+
+  egress {
+    from_port   = "0"
+    to_port     = "0"
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow out all traffic"
+  }
+
+  tags = {
+    Environment = "${local.workspace_title} ALB SG"
+  }
+}
+
