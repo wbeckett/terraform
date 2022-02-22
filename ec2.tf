@@ -1,3 +1,19 @@
+variable "user_data_script" {
+  type = string
+  default = <<EOF
+#!/bin/bash
+
+touch /root/.user_data
+yum update -y
+yum install httpd -y
+systemctl enable httpd
+echo "Hello New" > /var/www/htdocs/index.html
+reboot
+
+EOF
+
+}
+
 resource "aws_instance" "app_server_1" {
   ami           = "ami-033b95fb8079dc481"
   instance_type = "t2.micro"
@@ -11,16 +27,7 @@ resource "aws_instance" "app_server_1" {
     Name = "app_server_1"
   }
 
-  user_data = <<EOF
-#!/bin/bash
-
-touch /root/.user_data
-yum update -y
-yum install httpd -y
-systemctl enable httpd
-reboot
-
-EOF
+  user_data = var.user_data_script
 
 }
 
@@ -37,16 +44,7 @@ resource "aws_instance" "app_server_2" {
     Name = "app_server_2"
   }
 
-  user_data = <<EOF
-#!/bin/bash
-
-touch /root/.user_data
-yum update -y
-yum install httpd -y
-systemctl enable httpd
-reboot
-
-EOF
+  user_data = var.user_data_script
 
 }
 
