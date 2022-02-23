@@ -95,7 +95,7 @@ resource "aws_security_group" "default" {
     from_port   = "22"
     to_port     = "22"
     protocol    = "tcp"
-    cidr_blocks = ["88.99.82.251/32","0.0.0.0/0"]
+    cidr_blocks = ["88.99.82.251/32"]
     description = "Allow is SSH only from admin host"
   }
 
