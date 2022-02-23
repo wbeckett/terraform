@@ -6,7 +6,7 @@ variable "ports" {
 }
 
 resource "aws_lb" "test" {
-  name               = "test-lb-tf"
+  name               = "${local.workspace_title}-test-lb-tf"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb.id]
