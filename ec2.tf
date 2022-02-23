@@ -14,7 +14,7 @@ EOF
 
 }
 
-resource "aws_instance" "app_server_1a" {
+resource "aws_instance" "App_server_1a" {
   ami           = "ami-033b95fb8079dc481"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public-subnet-a.id
@@ -24,14 +24,14 @@ resource "aws_instance" "app_server_1a" {
   ]
 
   tags = {
-    Name = "${local.workspace_title}_app_server_1a"
+    Name = "${local.workspace_title}_App_server_1a"
   }
 
   user_data = var.user_data_script
 
 }
 
-resource "aws_instance" "app_server_2b" {
+resource "aws_instance" "App_server_2b" {
   ami           = "ami-033b95fb8079dc481"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public-subnet-b.id
@@ -41,14 +41,14 @@ resource "aws_instance" "app_server_2b" {
   ]
 
   tags = {
-    Name = "${local.workspace_title}_app_server_2b"
+    Name = "${local.workspace_title}_App_server_2b"
   }
 
   user_data = var.user_data_script
 
 }
 
-resource "aws_instance" "app_server_1b" {
+resource "aws_instance" "App_server_1b" {
   ami           = "ami-033b95fb8079dc481"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public-subnet-b.id
@@ -58,14 +58,14 @@ resource "aws_instance" "app_server_1b" {
   ]
 
   tags = {
-    Name = "${local.workspace_title}_app_server_1b"
+    Name = "${local.workspace_title}_App_server_1b"
   }
 
   user_data = var.user_data_script
 
 }
 
-resource "aws_instance" "app_server_2a" {
+resource "aws_instance" "App_server_2a" {
   ami           = "ami-033b95fb8079dc481"
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.public-subnet-a.id
@@ -75,7 +75,7 @@ resource "aws_instance" "app_server_2a" {
   ]
 
   tags = {
-    Name = "${local.workspace_title}_app_server_2a"
+    Name = "${local.workspace_title}_App_server_2a"
   }
 
   user_data = var.user_data_script
@@ -83,35 +83,35 @@ resource "aws_instance" "app_server_2a" {
 }
 
 
-resource "aws_alb_target_group_attachment" "app_server_1a" {
+resource "aws_alb_target_group_attachment" "App_server_1a" {
   for_each = var.ports
 
   target_group_arn = aws_alb_target_group.test[ each.key ].arn
-  target_id        = aws_instance.app_server_1a.id
+  target_id        = aws_instance.App_server_1a.id
   port             = each.value
 }
 
-resource "aws_alb_target_group_attachment" "app_server_2a" {
+resource "aws_alb_target_group_attachment" "App_server_2a" {
   for_each = var.ports
 
   target_group_arn = aws_alb_target_group.test[ each.key ].arn
-  target_id        = aws_instance.app_server_2a.id
+  target_id        = aws_instance.App_server_2a.id
   port             = each.value
 }
 
-resource "aws_alb_target_group_attachment" "app_server_1b" {
+resource "aws_alb_target_group_attachment" "App_server_1b" {
   for_each = var.ports
 
   target_group_arn = aws_alb_target_group.test[ each.key ].arn
-  target_id        = aws_instance.app_server_1b.id
+  target_id        = aws_instance.App_server_1b.id
   port             = each.value
 }
 
-resource "aws_alb_target_group_attachment" "app_server_2b" {
+resource "aws_alb_target_group_attachment" "App_server_2b" {
   for_each = var.ports
 
   target_group_arn = aws_alb_target_group.test[ each.key ].arn
-  target_id        = aws_instance.app_server_2b.id
+  target_id        = aws_instance.App_server_2b.id
   port             = each.value
 }
 
