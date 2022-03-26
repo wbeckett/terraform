@@ -1,5 +1,6 @@
 # AWS Prometheus workspace ( AMP ).
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/prometheus_workspace
+# https://docs.aws.amazon.com/prometheus/latest/userguide/AMP-onboard-ingest-metrics-remote-write-EC2.html
 
 locals {
   amp_name = "amp-${terraform.workspace}"

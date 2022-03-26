@@ -91,6 +91,15 @@ resource "aws_security_group" "default" {
     description = "Allow internal traffic"
   }
 
+  ingress {
+    from_port   = "0"
+    to_port     = "0"
+    protocol    = "-1"
+    cidr_blocks = ["88.99.82.251/32"]
+    description = "Allow internal traffic"
+  }
+
+
   egress {
     from_port   = "0"
     to_port     = "0"
