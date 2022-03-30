@@ -1,0 +1,10 @@
+# User supplied data in data.tml
+global:
+    scrape_interval: 15s
+    external_labels:
+      monitor: 'prometheus'
+
+scrape_configs:
+    - job_name: 'prometheus'
+      static_configs:
+       - targets: ['localhost:8000']

@@ -1,25 +1,18 @@
-#variable "user_data_script" {
-#  type    = string
-#  default = <<EOF
-##!/bin/bash
-#
-#touch /root/.user_data
-#yum update -y
-#yum install httpd -y
-#systemctl enable httpd
-#echo "Hello New" > /var/www/htdocs/index.html
-#reboot
-#
-#EOF
-#
-#}
+
+locals {
+  ec2_userdata = templatefile("${path.module}/templates/ec2_userdata.tpl",
+  {
+        amp_1 = "${ aws_prometheus_workspace.amp_1.prometheus_endpoint }",
+        region = "${ var.aws_region  }"
+  })
+}
 
 resource "aws_instance" "App_server_1a" {
   ami                  = "ami-033b95fb8079dc481"
   instance_type        = "t2.micro"
   subnet_id            = aws_subnet.public-subnet-a.id
   iam_instance_profile = aws_iam_instance_profile.profile_instance.name
-  user_data            = var.user_data_script
+  user_data            = local.ec2_userdata 
   key_name             = "ssh-key"
 
   vpc_security_group_ids = [
@@ -37,7 +30,7 @@ resource "aws_instance" "App_server_2b" {
   instance_type        = "t2.micro"
   subnet_id            = aws_subnet.public-subnet-b.id
   iam_instance_profile = aws_iam_instance_profile.profile_instance.name
-  user_data            = var.user_data_script
+  user_data            = local.ec2_userdata
   key_name             = "ssh-key"
 
   vpc_security_group_ids = [
@@ -55,7 +48,7 @@ resource "aws_instance" "App_server_1b" {
   instance_type        = "t2.micro"
   subnet_id            = aws_subnet.public-subnet-b.id
   iam_instance_profile = aws_iam_instance_profile.profile_instance.name
-  user_data            = var.user_data_script
+  user_data            = local.ec2_userdata
   key_name             = "ssh-key"
 
   vpc_security_group_ids = [
@@ -73,9 +66,8 @@ resource "aws_instance" "App_server_2a" {
   instance_type        = "t2.micro"
   subnet_id            = aws_subnet.public-subnet-a.id
   iam_instance_profile = aws_iam_instance_profile.profile_instance.name
-  user_data            = var.user_data_script
+  user_data            = local.ec2_userdata
   key_name             = "ssh-key"
-
   vpc_security_group_ids = [
     aws_security_group.default.id
   ]

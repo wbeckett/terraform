@@ -1,0 +1,10 @@
+# from header.tml
+remote_write:
+    -
+      url: https://aps-workspaces.us-east-1.amazonaws.com/workspaces/ws-2591cb80-fbdc-493f-a1f1-e1c87ffc593d/api/v1/remote_write
+      queue_config:
+          max_samples_per_send: 1000
+          max_shards: 200
+          capacity: 2500
+      sigv4:
+           region: us-east-1
